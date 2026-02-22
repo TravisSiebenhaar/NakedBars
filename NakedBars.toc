@@ -1,0 +1,10 @@
+## Interface: 120001
+## Title: NakedBars
+## Notes: Hide your action bars with a single toggle. YOU'RE NAKED!!!
+## Author: Travis
+## Version: 1.0.0
+## SavedVariables: NakedBarsDB
+## IconTexture: Interface\Icons\INV_Misc_Coat_01
+
+Bindings.xml
+NakedBars.lua

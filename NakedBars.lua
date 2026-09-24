@@ -1,6 +1,6 @@
 -- NakedBars — Hide your action bars with a single toggle
 -- /bars  or  keybind  to toggle  |  /bars config  to open settings
--- Interface: 120001
+-- Interface: 120001, 120100 (Retail) / 16001 (WoW: Forever)
 
 local addonName, NB = ...
 

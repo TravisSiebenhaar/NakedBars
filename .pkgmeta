@@ -1,0 +1,5 @@
+package-as: NakedBars
+
+ignore:
+  - .github
+  - .pkgmeta

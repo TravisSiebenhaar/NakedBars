@@ -79,20 +79,51 @@ Changes take effect immediately.
    ```
    World of Warcraft/_retail_/Interface/AddOns/NakedBars/
    ```
+   For WoW: Forever, use that client's `Interface/AddOns/` folder instead.
 3. Restart WoW or type `/reload`.
 4. The addon appears in your AddOns list. Type `/bars` to toggle!
 
 ## Compatibility
 
-- **WoW Retail 12.x** (Interface 120001)
+One package supports both clients via a multi-interface TOC line:
+
+- **WoW Retail 12.x** (Interface 120001, 120100)
+- **WoW: Forever 1.60.x** (Interface 16001) — Forever runs the modern (Midnight) addon API, so the same code loads on both
 - MainMenuBar does not exist in 12.x — bar 1 is handled via `ActionButton1-12`
 - Cooldown Manager frames: `EssentialCooldownViewer`, `UtilityCooldownViewer`, `BuffIconCooldownViewer`, `BuffBarCooldownViewer`
+  (Forever's native Cooldown Manager is still incomplete for some classes)
 - Third-party CMC addon: `CMCTracker1`, `CMCTracker2`
+
+Any frame that doesn't exist on the current client is skipped. Cooldown trackers whose frame is missing
+(e.g. CMC not installed) are greyed out in the settings panel and marked "(not available)".
+
+## Releasing
+
+Releases are packaged and uploaded to CurseForge automatically by the
+[BigWigs packager](https://github.com/BigWigsMods/packager) GitHub Action
+(`.github/workflows/release.yml`).
+
+One-time setup: add a CurseForge API token as the `CF_API_KEY` repository secret
+(CurseForge → Account → API Tokens).
+
+To release, tag and push:
+
+```
+git tag v1.1.0
+git push origin v1.1.0
+```
+
+The packager replaces `@project-version@` in the TOC with the tag and uploads the zip to
+CurseForge project `1469362` for both Retail and Forever. Tags containing `alpha`/`beta`
+are uploaded as alpha/beta releases.
 
 ## File Structure
 
 ```
 NakedBars/
+├── .github/workflows/
+│   └── release.yml          # Tag-triggered CurseForge release
+├── .pkgmeta                 # Packager config
 ├── NakedBars.toc            # Addon manifest
 ├── Bindings.xml             # Keybind registration
 ├── NakedBars.lua            # Core toggle logic & element registry

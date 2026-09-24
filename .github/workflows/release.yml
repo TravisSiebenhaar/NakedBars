@@ -1,0 +1,25 @@
+name: Package and release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    env:
+      CF_API_KEY: ${{ secrets.CF_API_KEY }}
+      GITHUB_OAUTH: ${{ secrets.GITHUB_TOKEN }}
+    permissions:
+      contents: write
+    steps:
+      - name: Clone project
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      # packager v2.6.1+ maps interface 16xxx to the WoW: Forever game type,
+      # so one zip is uploaded to CurseForge for both Retail and Forever.
+      - name: Package and upload
+        uses: BigWigsMods/packager@v2

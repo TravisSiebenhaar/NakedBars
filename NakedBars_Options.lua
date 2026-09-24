@@ -212,15 +212,28 @@ local function BuildPanel()
     -- Master toggle
     local cdmSubCheckboxes = {}
 
+    -- A tracker is usable only if its frame exists on this client
+    -- (e.g. CMC trackers need the third-party addon; Forever may lack some viewers)
+    local function IsCDMAvailable(key)
+        return _G[NB.CDM_MAP[key]] ~= nil
+    end
+
+    local function UpdateCDMSub(sub, masterEnabled)
+        local available = IsCDMAvailable(sub.cdmKey)
+        if masterEnabled and available then
+            sub:Enable()
+            sub.label:SetTextColor(1, 1, 1)
+        else
+            sub:Disable()
+            sub.label:SetTextColor(0.5, 0.5, 0.5)
+        end
+        sub.label:SetText(available and sub.baseLabel
+            or (sub.baseLabel .. " |cff888888(not available)|r"))
+    end
+
     local function SetCDMSubsEnabled(enabled)
         for _, sub in ipairs(cdmSubCheckboxes) do
-            if enabled then
-                sub:Enable()
-                sub.label:SetTextColor(1, 1, 1)
-            else
-                sub:Disable()
-                sub.label:SetTextColor(0.5, 0.5, 0.5)
-            end
+            UpdateCDMSub(sub, enabled)
         end
     end
 
@@ -256,26 +269,20 @@ local function BuildPanel()
                 NakedBarsDB.cdm[def.key] = checked
                 NB:ApplyState()
             end)
+        cb.cdmKey = def.key
+        cb.baseLabel = def.label
         table.insert(cdmSubCheckboxes, cb)
         table.insert(refreshCallbacks, function()
             cb:SetChecked(NakedBarsDB.cdm[def.key])
-            if NakedBarsDB.cdm.enabled then
-                cb:Enable()
-                cb.label:SetTextColor(1, 1, 1)
-            else
-                cb:Disable()
-                cb.label:SetTextColor(0.5, 0.5, 0.5)
-            end
+            UpdateCDMSub(cb, NakedBarsDB.cdm.enabled)
         end)
         if (i % 2 == 0) or i == #NB.CDM_DEFS then
             y = y - 30
         end
     end
 
-    -- Apply initial disabled state
-    if not NakedBarsDB.cdm.enabled then
-        SetCDMSubsEnabled(false)
-    end
+    -- Apply initial enabled/available state
+    SetCDMSubsEnabled(NakedBarsDB.cdm.enabled)
 
     ----------------------------------------------------------------
     -- Set scroll-child height

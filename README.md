@@ -106,16 +106,32 @@ Releases are packaged and uploaded to CurseForge automatically by the
 One-time setup: add a CurseForge API token as the `CF_API_KEY` repository secret
 (CurseForge → Account → API Tokens).
 
+### Versioning and release channels
+
+Tags follow `vMAJOR.MINOR.PATCH`, with an optional pre-release suffix. The suffix picks the
+CurseForge release channel (and marks the GitHub release as a pre-release):
+
+| Tag | CurseForge channel | Use for |
+|-----|--------------------|---------|
+| `v1.3.0-alpha1` | Alpha | Rough/experimental builds |
+| `v1.3.0-beta1` | Beta | Feature-complete, needs in-game testing |
+| `v1.3.0` | Release | Tested, stable |
+
+Always bump to a version that has never been used before, including files uploaded manually
+to CurseForge (manual uploads already used `1.1.0`).
+
 To release, tag and push:
 
 ```
-git tag v1.1.0
-git push origin v1.1.0
+git tag -a v1.3.0-beta1 -m "v1.3.0-beta1"
+git push origin v1.3.0-beta1
 ```
 
 The packager replaces `@project-version@` in the TOC with the tag and uploads the zip to
-CurseForge project `1469362` for both Retail and Forever. Tags containing `alpha`/`beta`
-are uploaded as alpha/beta releases.
+CurseForge project `1469362` for both Retail and Forever.
+
+New uploads sit in CurseForge's review queue before they appear on the public files page.
+Track them in the author dashboard: https://authors.curseforge.com → Projects → NakedBars → Files.
 
 ## File Structure
 

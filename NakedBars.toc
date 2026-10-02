@@ -7,6 +7,5 @@
 ## SavedVariables: NakedBarsDB
 ## IconTexture: Interface\Icons\INV_Misc_Coat_01
 
-Bindings.xml
 NakedBars.lua
 NakedBars_Options.lua

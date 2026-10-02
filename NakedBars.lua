@@ -52,9 +52,12 @@ NB.DEFAULTS = {
 ------------------------------------------------------------------------
 -- Element registry — config key → frame name(s)
 -- Uses alpha + mouse-disable approach
--- (actionBar1 is handled separately via ActionButton1-12)
+-- (actionBar1's buttons are also handled separately via ActionButton1-12;
+--  the container here covers the slot art and page arrows. Retail 12.x
+--  names it MainActionBar, older/Forever clients MainMenuBar.)
 ------------------------------------------------------------------------
 NB.ELEMENT_MAP = {
+    actionBar1  = { "MainActionBar", "MainMenuBar" },
     actionBar2  = { "MultiBarBottomLeft" },
     actionBar3  = { "MultiBarBottomRight" },
     actionBar4  = { "MultiBarRight" },
@@ -171,7 +174,7 @@ function NB:ApplyState()
     local db     = NakedBarsDB
     local hidden = db.hidden
 
-    -- Bar 1 — individual buttons (MainMenuBar absent in 12.x)
+    -- Bar 1 — individual buttons (container handled via ELEMENT_MAP)
     for i = 1, 12 do
         local btn = _G["ActionButton" .. i]
         if btn then

@@ -9,7 +9,7 @@ A World of Warcraft addon that hides your action bars and UI elements with a sin
 - **One-key toggle** — hide (and restore) selected UI elements instantly
 - **Per-element configuration** — choose exactly which bars and UI pieces are included in the toggle via a Blizzard-style settings panel
 - **Cooldown overlay** — optionally display Blizzard's cooldown viewers (and CMC trackers) *while* bars are hidden, so you never lose track of your abilities
-- **Combat-safe** — toggling during combat is deferred until combat ends
+- **Toggle anytime** — works in combat too; bars fade instantly, and click-through on protected bars is sorted out when combat ends
 - **Persistent** — your hidden/shown state and settings survive `/reload` and log-outs
 - **Keybind support** — bind the toggle in **Key Bindings → Other**
 

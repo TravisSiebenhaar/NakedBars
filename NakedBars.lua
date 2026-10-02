@@ -142,22 +142,37 @@ NB.CDM_DEFS = {
 
 ------------------------------------------------------------------------
 -- Internal tracking — we only restore frames we have actually hidden
+-- SetAlpha is allowed on protected frames in combat, but EnableMouse,
+-- SetParent and Show are not; those are deferred and reconciled by
+-- ApplyState on PLAYER_REGEN_ENABLED.
 ------------------------------------------------------------------------
-local modifiedFrames = {}
+local hiddenFrames  = {}
+local mouseDisabled = {}
+
+local function CanModify(frame)
+    return not (InCombatLockdown() and frame:IsProtected())
+end
 
 local function HideFrame(frame)
     frame:SetAlpha(0)
-    if frame.EnableMouse    then frame:EnableMouse(false) end
-    if frame.EnableKeyboard then frame:EnableKeyboard(false) end
-    modifiedFrames[frame] = true
+    hiddenFrames[frame] = true
+    if not mouseDisabled[frame] and CanModify(frame) then
+        if frame.EnableMouse    then frame:EnableMouse(false) end
+        if frame.EnableKeyboard then frame:EnableKeyboard(false) end
+        mouseDisabled[frame] = true
+    end
 end
 
 local function ShowFrame(frame)
-    if not modifiedFrames[frame] then return end
-    frame:SetAlpha(1)
-    if frame.EnableMouse    then frame:EnableMouse(true) end
-    if frame.EnableKeyboard then frame:EnableKeyboard(true) end
-    modifiedFrames[frame] = nil
+    if hiddenFrames[frame] then
+        frame:SetAlpha(1)
+        hiddenFrames[frame] = nil
+    end
+    if mouseDisabled[frame] and CanModify(frame) then
+        if frame.EnableMouse    then frame:EnableMouse(true) end
+        if frame.EnableKeyboard then frame:EnableKeyboard(true) end
+        mouseDisabled[frame] = nil
+    end
 end
 
 ------------------------------------------------------------------------
@@ -169,8 +184,6 @@ local cdmOrigParents = {}
 -- Apply state — reconciles every element against saved settings
 ------------------------------------------------------------------------
 function NB:ApplyState()
-    if InCombatLockdown() then return end
-
     local db     = NakedBarsDB
     local hidden = db.hidden
 
@@ -203,7 +216,9 @@ function NB:ApplyState()
     -- CDM (inverse: show when bars hidden, hide when bars visible)
     for key, frameName in pairs(self.CDM_MAP) do
         local f = _G[frameName]
-        if f then
+        -- Protected viewers can't be reparented in combat; left for the
+        -- post-combat ApplyState
+        if f and CanModify(f) then
             if hidden and db.cdm.enabled and db.cdm[key] then
                 -- Restore CDM frame to original parent
                 local orig = cdmOrigParents[frameName]
@@ -225,9 +240,7 @@ end
 ------------------------------------------------------------------------
 -- Toggle
 ------------------------------------------------------------------------
-local pendingToggle = false
-
-local function DoToggle()
+function NakedBars_Toggle()
     NakedBarsDB.hidden = not NakedBarsDB.hidden
     NB:ApplyState()
     if NakedBarsDB.hidden then
@@ -235,17 +248,6 @@ local function DoToggle()
     else
         print("|cff60ff60Bars restored. You're decent again.|r")
     end
-end
-
-function NakedBars_Toggle()
-    if InCombatLockdown() then
-        if not pendingToggle then
-            pendingToggle = true
-            print("|cffffcc00Can't toggle in combat — will toggle when combat ends.|r")
-        end
-        return
-    end
-    DoToggle()
 end
 
 ------------------------------------------------------------------------
@@ -307,11 +309,7 @@ eventFrame:SetScript("OnEvent", function(self, event, arg1)
         NB:ApplyState()
 
     elseif event == "PLAYER_REGEN_ENABLED" then
-        if pendingToggle then
-            pendingToggle = false
-            DoToggle()
-        else
-            NB:ApplyState()
-        end
+        -- Finish anything deferred while in combat (mouse, CDM reparenting)
+        NB:ApplyState()
     end
 end)

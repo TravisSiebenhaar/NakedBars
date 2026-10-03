@@ -5,9 +5,10 @@
 local addonName, NB = ...
 
 ------------------------------------------------------------------------
--- Keybind label (shows in Key Bindings UI under "Other")
+-- Keybind labels (own "NakedBars" section in the Key Bindings UI)
 ------------------------------------------------------------------------
-BINDING_NAME_NAKEDBARS_TOGGLE = "NakedBars: Toggle Bar Visibility"
+BINDING_HEADER_NAKEDBARS      = "NakedBars"
+BINDING_NAME_NAKEDBARS_TOGGLE = "Toggle Bar Visibility"
 
 ------------------------------------------------------------------------
 -- Hidden-parent frame — CDM frames are reparented here to vanish

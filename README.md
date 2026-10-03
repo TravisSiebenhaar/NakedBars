@@ -12,7 +12,7 @@ A World of Warcraft addon that hides your action bars and UI elements with a sin
 - **Cooldown keybinds** — shows the key bound to each spell on Blizzard's Essential and Utility cooldown icons, read from your action bars even while they're hidden
 - **Toggle anytime** — works in combat too; bars fade instantly, and click-through on protected bars is sorted out when combat ends
 - **Persistent** — your hidden/shown state and settings survive `/reload` and log-outs
-- **Keybind support** — bind the toggle in **Key Bindings → Other**
+- **Keybind support** — bind the toggle in **Key Bindings → NakedBars**
 
 ## Supported Elements
 
@@ -74,7 +74,7 @@ form bar paging is respected. Spells that aren't on any bound action button get 
 Open with `/bars config` or navigate to **Game Menu → Settings → AddOns → NakedBars**.
 
 The panel lets you:
-- See your current keybind (set it in Key Bindings → Other)
+- See your current keybind (set it in Key Bindings → NakedBars)
 - Check/uncheck individual action bars (1–8)
 - Check/uncheck UI elements (pet bar, micro menu, bags, XP bar, chat, objectives, minimap)
 - Enable or disable the cooldown overlay master toggle

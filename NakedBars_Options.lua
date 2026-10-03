@@ -115,7 +115,7 @@ local function BuildPanel()
         else
             keybindText:SetText(
                 "Keybind:  |cffff6060Not Set|r   "
-                .. "|cff888888(Key Bindings \226\128\186 Other)|r"
+                .. "|cff888888(Key Bindings \226\128\186 NakedBars)|r"
             )
         end
     end)

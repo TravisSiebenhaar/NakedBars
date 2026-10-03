@@ -1,5 +1,5 @@
 <Bindings>
-    <Binding name="NAKEDBARS_TOGGLE">
+    <Binding name="NAKEDBARS_TOGGLE" category="BINDING_HEADER_NAKEDBARS">
         NakedBars_Toggle()
     </Binding>
 </Bindings>

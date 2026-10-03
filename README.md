@@ -3,6 +3,7 @@
 A World of Warcraft addon that hides your action bars and UI elements with a single toggle — so you can enjoy the world without the clutter.
 
 > **YOU'RE NAKED!!!**
+<img width="720" height="403" alt="nb_recording" src="https://github.com/user-attachments/assets/b8aff65b-aaff-4d22-8e2c-2ec40509929d" />
 
 ## Features
 

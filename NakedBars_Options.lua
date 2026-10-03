@@ -283,6 +283,22 @@ local function BuildPanel()
 
     -- Apply initial enabled/available state
     SetCDMSubsEnabled(NakedBarsDB.cdm.enabled)
+    y = y - 6
+
+    -- Keybind labels (independent of the overlay toggle)
+    local keybindsCB = CreateNBCheckbox(content, col1X, y,
+        "Show Keybinds on Cooldowns",
+        "Show the key bound to each spell on Essential and Utility cooldown icons. "
+        .. "Keys are read from your action bars, even while they are hidden.",
+        NakedBarsDB.cdm.showKeybinds,
+        function(_, checked)
+            NakedBarsDB.cdm.showKeybinds = checked
+            if NB.RefreshKeybinds then NB.RefreshKeybinds() end
+        end)
+    table.insert(refreshCallbacks, function()
+        keybindsCB:SetChecked(NakedBarsDB.cdm.showKeybinds)
+    end)
+    y = y - 30
 
     ----------------------------------------------------------------
     -- Set scroll-child height

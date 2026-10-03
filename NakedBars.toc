@@ -8,4 +8,5 @@
 ## IconTexture: Interface\Icons\INV_Misc_Coat_01
 
 NakedBars.lua
+NakedBars_Keybinds.lua
 NakedBars_Options.lua

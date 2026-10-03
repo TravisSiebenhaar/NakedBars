@@ -46,6 +46,7 @@ NB.DEFAULTS = {
         buffBarCooldowns   = true,
         cmcTracker1        = true,
         cmcTracker2        = true,
+        showKeybinds       = true,
     },
 }
 

@@ -9,6 +9,7 @@ A World of Warcraft addon that hides your action bars and UI elements with a sin
 - **One-key toggle** — hide (and restore) selected UI elements instantly
 - **Per-element configuration** — choose exactly which bars and UI pieces are included in the toggle via a Blizzard-style settings panel
 - **Cooldown overlay** — optionally display Blizzard's cooldown viewers (and CMC trackers) *while* bars are hidden, so you never lose track of your abilities
+- **Cooldown keybinds** — shows the key bound to each spell on Blizzard's Essential and Utility cooldown icons, read from your action bars even while they're hidden
 - **Toggle anytime** — works in combat too; bars fade instantly, and click-through on protected bars is sorted out when combat ends
 - **Persistent** — your hidden/shown state and settings survive `/reload` and log-outs
 - **Keybind support** — bind the toggle in **Key Bindings → Other**
@@ -50,6 +51,15 @@ When bars are hidden, cooldown trackers can be shown *instead* — so you can mo
 | CMC Tracker 1 | `cmcTracker1` | ✅ |
 | CMC Tracker 2 | `cmcTracker2` | ✅ |
 
+### Cooldown Keybinds
+| Setting | Config Key | Default |
+|---------|-----------|---------|
+| Show keybinds on Essential/Utility cooldown icons | `showKeybinds` | ✅ |
+
+Each icon's spell is matched against the spells and macros on action bars 1–8; the first button
+with a binding supplies the label (e.g. `S1` for Shift-1, `M4` for mouse button 4). Stance and
+form bar paging is respected. Spells that aren't on any bound action button get no label.
+
 ## Commands
 
 | Command | Description |
@@ -69,6 +79,7 @@ The panel lets you:
 - Check/uncheck UI elements (pet bar, micro menu, bags, XP bar, chat, objectives, minimap)
 - Enable or disable the cooldown overlay master toggle
 - Pick exactly which cooldown trackers appear when bars are hidden
+- Show or hide keybind labels on cooldown icons
 
 Changes take effect immediately.
 
@@ -143,6 +154,7 @@ NakedBars/
 ├── NakedBars.toc            # Addon manifest
 ├── Bindings.xml             # Keybind registration
 ├── NakedBars.lua            # Core toggle logic & element registry
+├── NakedBars_Keybinds.lua   # Keybind labels on cooldown icons
 ├── NakedBars_Options.lua    # Blizzard-style settings panel
 └── README.md
 ```

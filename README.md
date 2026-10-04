@@ -33,6 +33,7 @@ A World of Warcraft addon that hides your action bars and UI elements with a sin
 | Element | Config Key | Default |
 |---------|-----------|---------|
 | Pet Action Bar | `petBar` | ✅ |
+| Stance Bar | `stanceBar` | ✅ |
 | Micro Menu | `microMenu` | ✅ |
 | Bags Bar | `bagsBar` | ✅ |
 | XP / Rep Bar | `xpBar` | ✅ |
@@ -77,7 +78,7 @@ Open with `/bars config` or navigate to **Game Menu → Settings → AddOns → 
 The panel lets you:
 - See your current keybind (set it in Key Bindings → NakedBars)
 - Check/uncheck individual action bars (1–8)
-- Check/uncheck UI elements (pet bar, micro menu, bags, XP bar, chat, objectives, minimap)
+- Check/uncheck UI elements (pet bar, stance bar, micro menu, bags, XP bar, chat, objectives, minimap)
 - Enable or disable the cooldown overlay master toggle
 - Pick exactly which cooldown trackers appear when bars are hidden
 - Show or hide keybind labels on cooldown icons
